@@ -8,7 +8,7 @@ const ALIVE_COL = '#fae';
 const DEAD_COL = '#0'
 
 export default class SimRenderer {
-    constructor(sim,font) {
+    constructor(sim) {
         this.sim = sim
         this.stats = undefined
         this.current_gen;
@@ -26,9 +26,8 @@ export default class SimRenderer {
         }
         p.push()
         p.fill('#0');
-        // p.textFont(this.font);
         p.textSize(30);
-        p.text(max,p.width /2 ,p.height / 8)
+        p.text(max - 1,p.width /2 ,p.height / 8)
         p.pop()
         this.showPopNum(p)
         this.showLastStat(p)
@@ -62,7 +61,7 @@ export default class SimRenderer {
         if(this.stat) {
             p.push()
             p.fill('#0');
-            // p.textFont(this.font);
+
             p.textSize(30);
             p.text(`Current Statistics\nPrevious max :${this.stat.max().toFixed(2)}\nPrevious avg:${this.stat.avg().toFixed(2)}\nPop number ${this.stat.pop_num()}`,p.width / 50  ,p.height / 8 + 50)
             p.pop()
@@ -72,7 +71,7 @@ export default class SimRenderer {
     showPopNum(p) {
         p.push()
         p.fill('#0');
-        // p.textFont(this.font);
+
         p.textSize(30);
         p.text("Current Gen : " + (this.sim.current_gen() + 1),p.width / 50  ,p.height / 8)
         p.pop()
