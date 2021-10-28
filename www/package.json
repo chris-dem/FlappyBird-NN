@@ -3,16 +3,20 @@
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://kritz-dem.github.io/FlappyBird-NN/",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "start": "webpack server"
+    "start": "webpack server",
+    "deploy": "yarn build && gh-pages -d dist "
   },
   "dependencies": {
-    "lib-simulation-wasm" : "file:../libs/simulation-wasm/pkg",
+    "lib-simulation-wasm": "file:../libs/simulation-wasm/pkg",
     "p5": "^1.4.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.0",
+    "file-loader": "^6.2.0",
+    "ttf-loader": "^1.0.2",
     "webpack": "^4.29.3",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^3.1.5"

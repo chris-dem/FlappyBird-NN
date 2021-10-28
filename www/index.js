@@ -2,22 +2,16 @@ import * as sim from "lib-simulation-wasm";
 import p5 from "p5";
 import SimRenderer from "./apps/myrender";
 
-
 const WINDOW_WIDTH = 1536;
 const WINDOW_HEIGHT = 726;
 const sketch = (p) => {
     let simulation;
     let renderer;
-    let font;
-  
     let canvas;
-    p.preload = () => {
-      font = p.loadFont('./assets/ZenKurenaido-Regular.ttf')
-    }
     p.setup = () => {
       canvas = p.createCanvas(WINDOW_WIDTH , WINDOW_HEIGHT);
       simulation = new sim.Simulation(p.width, p.height);;
-      renderer = new SimRenderer(simulation,font);
+      renderer = new SimRenderer(simulation);
     };
   
     p.draw = () => {
