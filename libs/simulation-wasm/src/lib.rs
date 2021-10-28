@@ -65,8 +65,8 @@ impl Statistics {
 impl From<&sim::Statistics> for Statistics {
     fn from(stat : &sim::Statistics) -> Self {
         Self {
-            avg : stat.ga.avg_fitness(),
-            max : stat.ga.max_fitness(),
+            avg : stat.ga.avg_fitness() -1.,
+            max : stat.ga.max_fitness() -1.,
             pop_num : stat.generation,
         }
     }
