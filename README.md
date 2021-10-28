@@ -5,7 +5,7 @@ This project's goal is to learn how neural networks work, and how genetic algori
 In addition I wanted to explore how rust's wasm performs with relatively heavy computation.
 
 ## Sources used:
-  -- Original Idea came from the youtube video : https://youtu.be/WSW-5m8lRMs
-  -- Most of the rust code came from the tutorial https://pwy.io/en/posts/learning-to-fly-pt1/
+   * Original Idea came from the youtube video : [link](https://youtu.be/WSW-5m8lRMs)
+   * Most of the rust code came from the tutorial [link](https://pwy.io/en/posts/learning-to-fly-pt1/)
 ## Access the project
-You can find a running version of the project on https://kritz-dem.github.io/FlappyBird-NN/
+You can find a running version of the project on [link](https://kritz-dem.github.io/FlappyBird-NN/)
