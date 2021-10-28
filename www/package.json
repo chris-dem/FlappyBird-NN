@@ -5,16 +5,16 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server"
+    "start": "webpack server"
   },
   "dependencies": {
-    "lib-simulation-wasm": "file:../libs/simulation-wasm/pkg",
+    "lib-simulation-wasm" : "file:../libs/simulation-wasm/pkg",
     "p5": "^1.4.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.0",
     "webpack": "^4.29.3",
-    "webpack-cli": "^3.1.0",
+    "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^3.1.5"
   }
 }
