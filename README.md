@@ -8,4 +8,4 @@ In addition I wanted to explore how rust's wasm performs with relatively heavy c
    * Original Idea came from the youtube video : [A.I. Learns to play Flappy Bird](https://youtu.be/WSW-5m8lRMs)
    * Most of the rust code came from the tutorial [Learning to Fly: Let's simulate evolution in Rust!](https://pwy.io/en/posts/learning-to-fly-pt1/)
 ## Access the project
-You can find a running version of the project on [link](https://kritz-dem.github.io/FlappyBird-NN/)
+You can find a running version of the project on [link](https://chris-dem.github.io/FlappyBird-NN/)
