@@ -6,7 +6,7 @@ use na::Vector2;
 pub const ACC  : f32 = 0.7;
 pub const WIDTH :f32 = 60.;
 pub const HEIGHT : f32 = 35.;
-const LIFT : Vector2<f32> = Vector2::new(0.,-20.);
+const LIFT_MAX : f32= -20.;
 const MIN_VY : f32 = -10.0 ;
 const MAX_VY  : f32 =  30.0;
 // static ALIVE_COL  : &str = "#fae";
@@ -102,26 +102,31 @@ impl  Bird {
         self.position.add_assign(self.velocity);
     }
 
-    pub fn flap(&mut self) {
-        self.velocity.add_assign(LIFT);
+    pub fn flap(&mut self,y : f32) {
+        self.velocity.y += y.clamp(LIFT_MAX, 0.1);
     }
 
-    
+    fn dist_pipe(x : &na::Point2<f32>, y : &na::Point2<f32>) -> [f32;4] {
+        [
+            na::distance(x,y),
+            na::distance(x, &(y + Vector2::new(0.,HEIGHT_SIZE))),
+            na::distance(x, &(y + Vector2::new(WIDTH_SIZE,0.))),
+            na::distance(x, &(y + Vector2::new(WIDTH_SIZE,HEIGHT_SIZE))),
+        ]
+    }
     pub fn look(&self, pipe_h : &PipeHandler) -> Vec<f32> {
         let mut vec = Vec::with_capacity(4usize);
         let min_pipe = pipe_h.ret_min_pipe();
-        let topl_dist : f32 = na::distance(&self.position,min_pipe.position());
-        let botl_dist : f32 = na::distance(&self.position, &(&min_pipe.position + Vector2::new(0.,HEIGHT_SIZE)));
-        let topr_dist : f32 = na::distance(&self.position, &(&min_pipe.position + Vector2::new(WIDTH_SIZE,0.)));
-        let botr_dist : f32 = na::distance(&self.position, &(&min_pipe.position + Vector2::new(WIDTH_SIZE,HEIGHT_SIZE)));
-        vec.push(topl_dist);
-        vec.push(botl_dist);
-        vec.push(topr_dist);
-        vec.push(botr_dist);
-        vec.push(self.boundary.1 - self.position.y);//distance from ground
+        let smin_pipe = pipe_h.ret_smin_pipe();
+        vec.extend(Self::dist_pipe(&self.position,min_pipe.position()).iter());
+        vec.extend(Self::dist_pipe(&self.position,smin_pipe.position()).iter());
+        vec.push(self.boundary.1 - self.position.y);
         vec.push(self.velocity.y);
+        vec.push((pipe_h.speed_inc.x + PIPE_SPEED.x).abs());
         vec
     }
+
+    
 }
 
 /* 

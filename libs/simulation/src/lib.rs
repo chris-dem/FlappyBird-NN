@@ -13,7 +13,7 @@ mod brain;
 mod statistics;
 // mod drawable;
 
-const DEFAULT_POP : usize = 50usize;
+const DEFAULT_POP : usize = 100usize;
 pub use self::{world::*, bird::*,pipe::*,piphandler::*,bird_individual::*,brain::*,statistics::*};
 
 
@@ -39,7 +39,7 @@ impl  Simulation {
             ga : ga::GeneticAlgorithm::new(
                 ga::RouletteWheelSelection::default(),
                 ga::UniformCrossover::default(),
-                ga::GaussianMutation::new(0.01,0.3)//testing for now,
+                ga::GaussianMutation::new(0.07,0.8)//testing for now,
             ),
             width  : w,
             height : h,
@@ -76,7 +76,7 @@ impl  Simulation {
             let vision = bird.look(&self.world.pipe_handler);
             let response = bird.brain.nn.propagate(vision);
             if response[0] > response[1] {
-                bird.flap()
+                bird.flap(-response[2])
             }
         }
     }

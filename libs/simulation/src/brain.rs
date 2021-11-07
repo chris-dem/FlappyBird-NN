@@ -28,24 +28,33 @@ impl Brain {
     fn topology() -> [nn::LayerTopology ; 3] {
         [
                 //Input nodes
-                //1 : TopL dist
-                //2 : BotL dist
-                //3 : TopR dist
-                //4 : BotR dist
-                //5 : Ground dist
-                //6 :  y vel
+                //01 : TopL dist
+                //02 : BotL dist
+                //03 : TopR dist
+                //04 : BotR dist
+                //05 : Next Pipe TopL dist
+                //06 : Next Pipe BotL dist
+                //07 : Next Pipe TopR dist
+                //08 : Next Pipe BotR dist
+                //09 : Ground dist
+                //10 : y vel
+                //11: x speed
                 nn::LayerTopology {
-                    neurons : 6
+                    neurons : 11
                 },
                 //Hidden layer
                 nn::LayerTopology {
                     neurons : 5
                 },
+                
+
+
 
                 //Output Layer
                 //Jump
                 //Dont jump
-                nn::LayerTopology { neurons : 2}
+                //How much to jump
+                nn::LayerTopology { neurons : 3}
 
         ]
     }

@@ -1,15 +1,17 @@
 use crate::*;
 use rand::{Rng, RngCore};
+use nalgebra as na;
 
 const ARR_SIZE : usize= 4;
-const PIPE_DIFF : f32 = 450.;
+const PIPE_DIFF : f32 = 475.;
 
 type Bound = (f32,f32);
 #[derive(Debug)]
 pub struct PipeHandler {
     pub pipes : Vec<Pipe>,
     idx : usize,
-    bound : Bound
+    bound : Bound,
+    pub speed_inc : na::Vector2<f32>
 }
 
 
@@ -24,7 +26,8 @@ impl PipeHandler {
         Self {
             pipes : arr,
             idx : 0,
-            bound
+            bound,
+            speed_inc : na::Vector2::new(0.,0.)
         }
     }
 
@@ -34,21 +37,27 @@ impl PipeHandler {
             self.pipes[i].position.y = (rng.gen::<f32>() * self.bound.1).clamp(HEIGHT_SIZE - HEIGHT / 2.,self.bound.1 - HEIGHT_SIZE - 50.);
         }
         self.idx = 0;
+        self.speed_inc = na::Vector2::new(0.,0.)
     }
 
     pub fn step(&mut self, birds : &mut Vec<Bird>) {
         let x : f32 = self.pipes[ARR_SIZE - 1].position.x;
-        self.pipes[0].update(x + PIPE_DIFF);
+        self.pipes[0].update(x + PIPE_DIFF,self.speed_inc);
 
         for (i,j) in (0..ARR_SIZE).zip(1..ARR_SIZE){
             let x = self.pipes[i].position.x + PIPE_DIFF;
-            self.pipes[j].update(x);
+            self.pipes[j].update(x,self.speed_inc);
         };
+        let mut max_c = 0;
         if self.pipes[self.idx].position.x  + WIDTH_SIZE + WIDTH / 2. < self.bound.0 / 3. {
             self.idx = (self.idx + 1) % ARR_SIZE;
             birds.iter_mut()
                 .filter(|b| b.state())
-                .for_each(|b| b.counter += 1);
+                .for_each(|b| {
+                    b.counter += 1;
+                    max_c = b.counter.max(max_c);
+                });
+            self.speed_inc.x = (self.speed_inc.x - 0.05 * (max_c as f32 / 25.)).clamp(-10., 0.);
         }
     }
     pub fn check_collision(&mut self, bird_counter : &mut usize, birds: &mut Vec<Bird>) {
@@ -76,5 +85,9 @@ impl PipeHandler {
 
     pub fn ret_min_pipe(&self) -> &Pipe {
         &self.pipes[self.idx]
+    }
+
+    pub fn ret_smin_pipe(&self) -> &Pipe {
+        &self.pipes[(self.idx + 1) % ARR_SIZE]
     }
 }
